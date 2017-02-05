@@ -51,6 +51,9 @@
     <Compile Include="Veiculos.cs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>9.0.1</Version>
+    </PackageReference>
     <PackageReference Include="RestSharp">
       <Version>105.2.3</Version>
     </PackageReference>

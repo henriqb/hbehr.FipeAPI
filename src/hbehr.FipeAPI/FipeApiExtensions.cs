@@ -20,6 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Net;
@@ -28,13 +29,18 @@ namespace hbehr.FipeAPI
 {
     internal static class FipeApiExtensions
     {
-        internal static IRestResponse<T> ErrorTreatment<T>(this IRestResponse<T> response)
+        internal static IRestResponse ErrorTreatment(this IRestResponse response)
         {
             if (response.StatusCode == HttpStatusCode.OK) { return response; }
             string msg = string.Format(@"Não foi possível completar a requisição ao servidor da Fipe. Status Code: {0}, 
                 Error Message: {1}, Response Content: {2}",
                 response.StatusCode, response.ErrorMessage, response.Content);
             throw new Exception(msg);
+        }
+
+        internal static T Deserialize<T>(this IRestResponse response)
+        {
+            return JsonConvert.DeserializeObject<T>(response.Content);
         }
     }
 }

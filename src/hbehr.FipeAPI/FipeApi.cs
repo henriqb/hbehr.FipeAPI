@@ -40,7 +40,9 @@ namespace hbehr.FipeAPI
         /// <returns>IEnumerable de Marcas</returns>
         public IEnumerable<Marcas> GetMarcas()
         {
-            return GetMarcasAsync().Result;
+            IRestRequest request = new RestRequest("/marcas.json", Method.GET);
+            IRestResponse response = client.Execute(request);
+            return response.ErrorTreatment().Deserialize<IEnumerable<Marcas>>();
         }
 
         /// <summary>
@@ -50,8 +52,8 @@ namespace hbehr.FipeAPI
         public async Task<IEnumerable<Marcas>> GetMarcasAsync()
         {
             IRestRequest request = new RestRequest("/marcas.json", Method.GET);
-            IRestResponse<IEnumerable<Marcas>> response = await client.ExecuteTaskAsync<IEnumerable<Marcas>>(request);
-            return response.ErrorTreatment().Data;
+            IRestResponse response = await client.ExecuteTaskAsync(request);
+            return response.ErrorTreatment().Deserialize<IEnumerable<Marcas>>();
         }
 
         /// <summary>
@@ -61,7 +63,11 @@ namespace hbehr.FipeAPI
         /// <returns>IEnumerable de Veículos</returns>
         public IEnumerable<Veiculos> GetVeiculos(string marcaId)
         {
-            return GetVeiculosAsync(marcaId).Result;
+            if (string.IsNullOrWhiteSpace(marcaId)) { throw new ArgumentException(nameof(marcaId)); }
+            IRestRequest request = new RestRequest(string.Format("/veiculos/{0}.json", marcaId), Method.GET);
+            IRestResponse response = client.Execute(request);
+            return response.ErrorTreatment().Deserialize<IEnumerable<Veiculos>>();
+
         }
 
         /// <summary>
@@ -73,8 +79,8 @@ namespace hbehr.FipeAPI
         {
             if (string.IsNullOrWhiteSpace(marcaId)) { throw new ArgumentException(nameof(marcaId)); }
             IRestRequest request = new RestRequest(string.Format("/veiculos/{0}.json", marcaId), Method.GET);
-            IRestResponse<IEnumerable<Veiculos>> response = await client.ExecuteTaskAsync<IEnumerable<Veiculos>>(request);
-            return response.ErrorTreatment().Data;
+            IRestResponse response = await client.ExecuteTaskAsync(request);
+            return response.ErrorTreatment().Deserialize<IEnumerable<Veiculos>>();
         }
 
         /// <summary>
@@ -85,7 +91,11 @@ namespace hbehr.FipeAPI
         /// <returns>IEnumerable de Ano Modelos</returns>
         public IEnumerable<AnoModelo> GetAnoModelos(string marcaId, string veiculoId)
         {
-            return GetAnoModelosAsync(marcaId, veiculoId).Result;
+            if (string.IsNullOrWhiteSpace(marcaId)) { throw new ArgumentException(nameof(marcaId)); }
+            if (string.IsNullOrWhiteSpace(veiculoId)) { throw new ArgumentException(nameof(veiculoId)); }
+            IRestRequest request = new RestRequest(string.Format("/veiculo/{0}/{1}.json", marcaId, veiculoId), Method.GET);
+            IRestResponse response = client.Execute(request);
+            return response.ErrorTreatment().Deserialize<IEnumerable<AnoModelo>>();
         }
 
         /// <summary>
@@ -98,9 +108,9 @@ namespace hbehr.FipeAPI
         {
             if (string.IsNullOrWhiteSpace(marcaId)) { throw new ArgumentException(nameof(marcaId)); }
             if (string.IsNullOrWhiteSpace(veiculoId)) { throw new ArgumentException(nameof(veiculoId)); }
-            IRestRequest request = new RestRequest(string.Format("/veiculos/{0}/{1}.json", marcaId, veiculoId), Method.GET);
-            IRestResponse<IEnumerable<AnoModelo>> response = await client.ExecuteTaskAsync<IEnumerable<AnoModelo>>(request);
-            return response.ErrorTreatment().Data;
+            IRestRequest request = new RestRequest(string.Format("/veiculo/{0}/{1}.json", marcaId, veiculoId), Method.GET);
+            IRestResponse response = await client.ExecuteTaskAsync(request);
+            return response.ErrorTreatment().Deserialize<IEnumerable<AnoModelo>>();
         }
     }
 }
