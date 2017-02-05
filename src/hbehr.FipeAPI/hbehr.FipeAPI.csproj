@@ -11,6 +11,7 @@
     <AssemblyName>hbehr.FipeAPI</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -59,4 +60,8 @@
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy /Y "$(TargetPath)" "$(SolutionDir)\..\binary\$(TargetFrameworkVersion.Replace("v", "net").Replace(".", ""))"
+copy /Y "$(TargetDir)$(ProjectName).pdb" "$(SolutionDir)\..\binary\$(TargetFrameworkVersion.Replace("v", "net").Replace(".", ""))"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
