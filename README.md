@@ -51,8 +51,8 @@ public struct Veiculos
 ### Load Ano Modelo (Ano/Modelo)
 ```C#
 string veiculoId = veiculos.First().id;
-IEnumerable<Veiculos> marcas = await api.GetAnoModelosAsync(marcaId, veiculoId); // Assync
-IEnumerable<Veiculos> marcas = api.GetAnoModelos(marcaId, veiculoId); // Sync
+IEnumerable<AnoModelo> marcas = await api.GetAnoModelosAsync(marcaId, veiculoId); // Assync
+IEnumerable<AnoModelo> marcas = api.GetAnoModelos(marcaId, veiculoId); // Sync
 
 public struct AnoModelo
 {
