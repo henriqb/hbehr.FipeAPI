@@ -51,8 +51,8 @@ public struct Veiculos
 ### Load Ano Modelo (Ano/Modelo)
 ```C#
 string veiculoId = veiculos.First().id;
-IEnumerable<AnoModelo> marcas = await api.GetAnoModelosAsync(marcaId, veiculoId); // Assync
-IEnumerable<AnoModelo> marcas = api.GetAnoModelos(marcaId, veiculoId); // Sync
+IEnumerable<AnoModelo> anoModelos = await api.GetAnoModelosAsync(marcaId, veiculoId); // Assync
+IEnumerable<AnoModelo> anoModelos = api.GetAnoModelos(marcaId, veiculoId); // Sync
 
 public struct AnoModelo
 {
@@ -63,5 +63,26 @@ public struct AnoModelo
   public string key { get; set; }
   public string veiculo { get; set; }
   public string id { get; set; }
+}
+```
+
+### Load Preço Corrente
+```C#
+string anoModeloId = anoModelos.First().id;
+PrecoCorrente precoCorrente = await api.GetPrecoCorrenteAsync(marcaId, veiculoId, anoModeloId);
+PrecoCorrente precoCorrente = api.GetPrecoCorrente(marcaId, veiculoId, anoModeloId);
+
+public struct PrecoCorrente
+{
+  public string id { get; set; }
+  public string ano_modelo { get; set; }
+  public string marca { get; set; }
+  public string name { get; set; }
+  public string veiculo { get; set; }
+  public string preco { get; set; }
+  public string combustivel { get; set; }
+  public string referencia { get; set; }
+  public string fipe_codigo { get; set; }
+  public string key { get; set; }
 }
 ```

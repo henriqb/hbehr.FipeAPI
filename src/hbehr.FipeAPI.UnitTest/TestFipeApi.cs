@@ -80,5 +80,25 @@ namespace hbehr.FipeAPI.UnitTest
             Assert.Throws<ArgumentException>(() => api.GetAnoModelos(null, null));
             Assert.ThrowsAsync<ArgumentException>(() => api.GetAnoModelosAsync(null, null));
         }
+
+        [Test]
+        public async Task TestGetPrecoCorrente()
+        {
+            var marcas = await api.GetMarcasAsync();
+            var marca = marcas.First();
+            var veiculos = await api.GetVeiculosAsync(marca.id);
+            var veiculo = veiculos.First();
+            var anoModelos = await api.GetAnoModelosAsync(marca.id, veiculo.id);
+            var anoModelo = anoModelos.First();
+
+            var precoCorrente = await api.GetPrecoCorrenteAsync(marca.id, veiculo.id, anoModelo.id);
+            Assert.IsNotNull(precoCorrente);
+
+            precoCorrente = api.GetPrecoCorrente(marca.id, veiculo.id, anoModelo.id);
+            Assert.IsNotNull(precoCorrente);
+
+            Assert.Throws<ArgumentException>(() => api.GetPrecoCorrente(null, null, null));
+            Assert.ThrowsAsync<ArgumentException>(() => api.GetPrecoCorrenteAsync(null, null, null));
+        }
     }
 }

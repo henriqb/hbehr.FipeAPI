@@ -48,6 +48,7 @@
     <Compile Include="FipeCarrosApi.cs" />
     <Compile Include="FipeMotosApi.cs" />
     <Compile Include="Marcas.cs" />
+    <Compile Include="PrecoCorrente.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Veiculos.cs" />
   </ItemGroup>

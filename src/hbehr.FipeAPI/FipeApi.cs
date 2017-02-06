@@ -112,5 +112,39 @@ namespace hbehr.FipeAPI
             IRestResponse response = await client.ExecuteTaskAsync(request);
             return response.ErrorTreatment().Deserialize<IEnumerable<AnoModelo>>();
         }
+
+        /// <summary>
+        /// Busca o preço corrente de um determinado modelo de veículo de acordo com o ano do modelo
+        /// </summary>
+        /// <param name="marcaId">id da marca</param>
+        /// <param name="veiculoId">id do modelo</param>
+        /// <param name="anoModeloId">id do ano do modelo</param>
+        /// <returns>Estrutura do Preço Corrente</returns>
+        public PrecoCorrente GetPrecoCorrente(string marcaId, string veiculoId, string anoModeloId)
+        {
+            if (string.IsNullOrWhiteSpace(marcaId)) { throw new ArgumentException(nameof(marcaId)); }
+            if (string.IsNullOrWhiteSpace(veiculoId)) { throw new ArgumentException(nameof(veiculoId)); }
+            if (string.IsNullOrWhiteSpace(anoModeloId)) { throw new ArgumentException(nameof(anoModeloId)); }
+            IRestRequest request = new RestRequest(string.Format("/veiculo/{0}/{1}/{2}.json", marcaId, veiculoId, anoModeloId), Method.GET);
+            IRestResponse response = client.Execute(request);
+            return response.ErrorTreatment().Deserialize<PrecoCorrente>();
+        }
+
+        /// <summary>
+        /// Busca o preço corrente de um determinado modelo de veículo de acordo com o ano do modelo
+        /// </summary>
+        /// <param name="marcaId">id da marca</param>
+        /// <param name="veiculoId">id do modelo</param>
+        /// <param name="anoModeloId">id do ano do modelo</param>
+        /// <returns>Estrutura do Preço Corrente</returns>
+        public async Task<PrecoCorrente> GetPrecoCorrenteAsync(string marcaId, string veiculoId, string anoModeloId)
+        {
+            if (string.IsNullOrWhiteSpace(marcaId)) { throw new ArgumentException(nameof(marcaId)); }
+            if (string.IsNullOrWhiteSpace(veiculoId)) { throw new ArgumentException(nameof(veiculoId)); }
+            if (string.IsNullOrWhiteSpace(anoModeloId)) { throw new ArgumentException(nameof(anoModeloId)); }
+            IRestRequest request = new RestRequest(string.Format("/veiculo/{0}/{1}/{2}.json", marcaId, veiculoId, anoModeloId), Method.GET);
+            IRestResponse response = await client.ExecuteTaskAsync(request);
+            return response.ErrorTreatment().Deserialize<PrecoCorrente>();
+        }
     }
 }
