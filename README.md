@@ -4,7 +4,7 @@ C# .NET Blibioteca para acessar a API pública da tabela FIPE para veículos.
 To understand how FIPE Public API works, read on http://fipeapi.appspot.com/
 
 ## Instalation
-Get it on nuget: https://www.nuget.org/packages/hbehr.FipeAPI/1.0.0
+Get it on nuget: https://www.nuget.org/packages/hbehr.FipeAPI
 
   PM> Install-Package hbehr.FipeAPI
 
